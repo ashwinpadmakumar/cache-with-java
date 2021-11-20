@@ -1,5 +1,3 @@
-package com.workspace.algorithm;
-
 /**
  * Description: Custom Banner for Startup.
  *
@@ -7,6 +5,9 @@ package com.workspace.algorithm;
  * @since: 2021-08-23
  * @version: 0.1
  */
+
+package com.workspace.algorithm;
+
 public class DoublyLinkedListNode<E> {
 
   DoublyLinkedListNode<E> prev;

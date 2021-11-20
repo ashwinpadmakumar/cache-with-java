@@ -1,11 +1,3 @@
-package com.workspace.storage;
-
-import com.workspace.exceptions.NotFoundException;
-import com.workspace.exceptions.StorageFullException;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Description: Custom Banner for Startup.
  *
@@ -13,10 +5,19 @@ import java.util.Map;
  * @since: 2021-08-23
  * @version: 0.1
  */
-public class HashMapStorage<Key, Value> implements Storage<Key, Value> {
 
-  Map<Key, Value> storage;
-  int capacity;
+package com.workspace.storage;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.workspace.exceptions.NotFoundException;
+import com.workspace.exceptions.StorageFullException;
+
+public class HashMapStorage<K, V> implements Storage<K, V> {
+
+  private final Map<K, V> storage;
+  private final int capacity;
 
   public HashMapStorage(Integer capacity) {
     this.capacity = capacity;
@@ -24,7 +25,7 @@ public class HashMapStorage<Key, Value> implements Storage<Key, Value> {
   }
 
   @Override
-  public void add(Key key, Value value) {
+  public void add(K key, V value) {
     if (storage.size() == capacity) {
       throw new StorageFullException("Cache full");
     } else {
@@ -33,18 +34,18 @@ public class HashMapStorage<Key, Value> implements Storage<Key, Value> {
   }
 
   @Override
-  public void remove(Key key) {
+  public void remove(K key) {
     if (!storage.containsKey(key)) {
-      throw new NotFoundException("Key does not exist");
+      throw new NotFoundException("K does not exist");
     } else {
       storage.remove(key);
     }
   }
 
   @Override
-  public Value get(Key key) {
+  public V get(K key) {
     if (!storage.containsKey(key)) {
-      throw new NotFoundException("Key does not exist");
+      throw new NotFoundException("K does not exist");
     } else {
       return storage.get(key);
     }

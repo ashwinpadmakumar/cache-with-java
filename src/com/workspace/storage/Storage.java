@@ -1,8 +1,3 @@
-package com.workspace.storage;
-
-import com.workspace.exceptions.NotFoundException;
-import com.workspace.exceptions.StorageFullException;
-
 /**
  * Description: Custom Banner for Startup.
  *
@@ -10,10 +5,17 @@ import com.workspace.exceptions.StorageFullException;
  * @since: 2021-08-23
  * @version: 0.1
  */
-public interface Storage<Key, Value> {
-  void add(Key key, Value value) throws StorageFullException;
 
-  void remove(Key key) throws NotFoundException;
+package com.workspace.storage;
 
-  Value get(Key key) throws NotFoundException;
+import com.workspace.exceptions.NotFoundException;
+import com.workspace.exceptions.StorageFullException;
+
+
+public interface Storage<K, V> {
+  void add(K key, V value) throws StorageFullException;
+
+  void remove(K key) throws NotFoundException;
+
+  V get(K key) throws NotFoundException;
 }

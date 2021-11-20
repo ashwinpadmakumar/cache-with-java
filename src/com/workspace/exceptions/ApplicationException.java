@@ -2,15 +2,15 @@
  * Description: Custom Banner for Startup.
  *
  * @author: Ashwin Padmakumar
- * @since: 2021-08-23
+ * @since: 2021-11-20
  * @version: 0.1
  */
 
 package com.workspace.exceptions;
 
-public class NotFoundException extends RuntimeException {
+public class ApplicationException extends RuntimeException {
 
-  public NotFoundException(String message) {
+  public ApplicationException(String message) {
     super(message);
   }
 }

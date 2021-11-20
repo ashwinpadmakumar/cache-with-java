@@ -1,5 +1,3 @@
-package com.workspace.eviction;
-
 /**
  * Description: Custom Banner for Startup.
  *
@@ -7,9 +5,12 @@ package com.workspace.eviction;
  * @since: 2021-08-23
  * @version: 0.1
  */
-public interface EvictionPolicy<Key> {
 
-  void keyAccessed(Key key);
+package com.workspace.eviction;
 
-  Key evictKey();
+public interface EvictionPolicy<K> {
+
+  void keyAccessed(K key);
+
+  K evictKey();
 }

@@ -1,11 +1,3 @@
-package com.workspace.eviction;
-
-import com.workspace.algorithm.DoublyLinkedList;
-import com.workspace.algorithm.DoublyLinkedListNode;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Description: Custom Banner for Startup.
  *
@@ -13,10 +5,20 @@ import java.util.Map;
  * @since: 2021-08-23
  * @version: 0.1
  */
-public class LRUEvictionPolicy<Key> implements EvictionPolicy<Key> {
 
-  private final DoublyLinkedList<Key> doublyLinkedList;
-  private final Map<Key, DoublyLinkedListNode<Key>> mapper;
+package com.workspace.eviction;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.workspace.algorithm.DoublyLinkedList;
+import com.workspace.algorithm.DoublyLinkedListNode;
+import com.workspace.exceptions.ApplicationException;
+
+public class LRUEvictionPolicy<K> implements EvictionPolicy<K> {
+
+  private final DoublyLinkedList<K> doublyLinkedList;
+  private final Map<K, DoublyLinkedListNode<K>> mapper;
 
   public LRUEvictionPolicy() {
     this.doublyLinkedList = new DoublyLinkedList<>();
@@ -25,22 +27,22 @@ public class LRUEvictionPolicy<Key> implements EvictionPolicy<Key> {
 
 
   @Override
-  public void keyAccessed(Key key) {
+  public void keyAccessed(K key) {
     if (mapper.containsKey(key)) {
       doublyLinkedList.detach(mapper.get(key));
       doublyLinkedList.addLast(mapper.get(key));
     } else {
-      DoublyLinkedListNode<Key> node = doublyLinkedList.addLast(key);
+      DoublyLinkedListNode<K> node = doublyLinkedList.addLast(key);
       mapper.put(key, node);
     }
   }
 
   @Override
-  public Key evictKey() {
+  public K evictKey() {
     if (doublyLinkedList.isEmpty()) {
-      throw new RuntimeException("Cache is empty");
+      throw new ApplicationException("Cache is empty");
     } else {
-      DoublyLinkedListNode<Key> first = doublyLinkedList.getFirst();
+      DoublyLinkedListNode<K> first = doublyLinkedList.getFirst();
       doublyLinkedList.detach(first);
       return first.getElement();
     }

@@ -1,5 +1,3 @@
-package com.workspace.algorithm;
-
 /**
  * Description: Custom Banner for Startup.
  *
@@ -7,6 +5,11 @@ package com.workspace.algorithm;
  * @since: 2021-08-23
  * @version: 0.1
  */
+
+package com.workspace.algorithm;
+
+import com.workspace.exceptions.ApplicationException;
+
 public class DoublyLinkedList<E> {
 
   DoublyLinkedListNode<E> dummyHead;
@@ -19,11 +22,21 @@ public class DoublyLinkedList<E> {
     dummyTail.prev = dummyHead;
   }
 
-  public void detach(DoublyLinkedListNode<E> node) {
-    if (node != null) {
-      node.prev.next = node.next;
-      node.next.prev = node.prev;
+  public void addFirst(DoublyLinkedListNode<E> node) {
+    DoublyLinkedListNode<E> dummyHeadNext = dummyHead.next;
+    dummyHeadNext.prev = node;
+    node.prev = dummyHead;
+    dummyHead.next = node;
+    node.next = dummyHeadNext;
+  }
+
+  public DoublyLinkedListNode<E> addFirst(E element) {
+    if (element == null) {
+      throw new ApplicationException("Invalid element exception");
     }
+    DoublyLinkedListNode<E> node = new DoublyLinkedListNode<>(element);
+    addFirst(node);
+    return node;
   }
 
   public void addLast(DoublyLinkedListNode<E> node) {
@@ -34,30 +47,20 @@ public class DoublyLinkedList<E> {
     node.prev = dummyTailPrev;
   }
 
-  public void addFirst(DoublyLinkedListNode<E> node) {
-    DoublyLinkedListNode<E> dummyHeadNext = dummyHead.next;
-    dummyHeadNext.prev = node;
-    node.prev = dummyHead;
-    dummyHead.next = node;
-    node.next  = dummyHeadNext;
-  }
-
   public DoublyLinkedListNode<E> addLast(E element) {
     if (element == null) {
-      throw new RuntimeException("Invalid element exception");
+      throw new ApplicationException("Invalid element exception");
     }
     DoublyLinkedListNode<E> node = new DoublyLinkedListNode<>(element);
     addLast(node);
     return node;
   }
 
-  public DoublyLinkedListNode<E> addFirst(E element) {
-    if (element == null) {
-      throw new RuntimeException("Invalid element exception");
+  public void detach(DoublyLinkedListNode<E> node) {
+    if (node != null) {
+      node.prev.next = node.next;
+      node.next.prev = node.prev;
     }
-    DoublyLinkedListNode<E> node = new DoublyLinkedListNode<>(element);
-    addFirst(node);
-    return node;
   }
 
   public boolean isEmpty() {
